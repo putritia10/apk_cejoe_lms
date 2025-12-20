@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               children: const [
                 Text('Hallo,', style: TextStyle(fontSize: 12, color: Colors.grey)),
                 SizedBox(height: 2),
-                Text('DANDY CANDRA PRATAMA', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                Text('PUTRI TIA', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text('DESAIN ANTARMUKA & PENGALAMAN PENGGUNA', style: TextStyle(fontWeight: FontWeight.bold, color: _primary)),
                 const SizedBox(height: 8),
-                Text('Tugas: 01 - Ujian Final Mobile Game', style: TextStyle(color: Colors.grey[700])),
+                Text('Tugas: Uas - Ujian Akhir Semester', style: TextStyle(color: Colors.grey[700])),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                       children: const [
                         Text('Waktu Pengumpulan', style: TextStyle(color: Colors.grey, fontSize: 12)),
                         SizedBox(height: 4),
-                        Text('Jumat 28 Februari, 23:45 WIB', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Jumat 31 Desember, 23:59 WIB', style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                     ElevatedButton(
@@ -191,9 +191,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
-                            Text('Maintenance Pro LMS Semester Genap 2020/2021', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text('Maintenance Pro LMS Semester Genap 2025', style: TextStyle(fontWeight: FontWeight.bold)),
                             SizedBox(height: 6),
-                            Text('Detail: Ada pemeliharaan pada sistem pada tanggal 5 Feb', style: TextStyle(color: Colors.grey)),
+                            Text('Detail: Ada pemeliharaan pada sistem pada tanggal 31 desember', style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                       ),
@@ -271,7 +271,7 @@ class CourseProgressItem extends StatelessWidget {
 }
 
 final List<Map<String, dynamic>> _sampleCourses = [
-  {'title': 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA', 'code': 'DESAIN-UI/UX', 'image': 'assets/images/bg_login.jpg', 'progress': 0.25},
+  {'title': 'MOBILE PROGRAMMING', 'code': 'DESAIN-UI/UX', 'image': 'assets/images/bg_login.jpg', 'progress': 0.25},
   {'title': 'PENGEMBANGAN MOBILE', 'code': 'MOBDEV-02', 'image': 'assets/images/bg_login.jpg', 'progress': 0.5},
   {'title': 'SISTEM OPERASI', 'code': 'SYS-01', 'image': 'assets/images/bg_login.jpg', 'progress': 0.75},
   {'title': 'JARINGAN', 'code': 'NET-01', 'image': 'assets/images/bg_login.jpg', 'progress': 0.1},
