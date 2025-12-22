@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,19 +81,23 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // small profile shortcut button
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.red.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            child: Row(
-              children: const [
-                Text('MAHASISWA', style: TextStyle(fontSize: 12, color: Colors.white)),
-                SizedBox(width: 6),
-                Icon(Icons.person, color: Colors.white, size: 18),
-              ],
+          // small profile shortcut button (tappable)
+          InkWell(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfilePage())),
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Row(
+                children: const [
+                  Text('MAHASISWA', style: TextStyle(fontSize: 12, color: Colors.white)),
+                  SizedBox(width: 6),
+                  Icon(Icons.person, color: Colors.white, size: 18),
+                ],
+              ),
             ),
           ),
         ],
@@ -136,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(backgroundColor: _primary),
-                      child: const Text('Buka Tugas'),
+                      child: const Text('Buka Tugas', style: TextStyle(color: Colors.white),),
                     ),
                   ],
                 )
