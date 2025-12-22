@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: size.height * 0.38,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/bg_login.jpg'),
+                      image: AssetImage('assets/images/image.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -56,11 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   child: CircleAvatar(
-                    backgroundColor: primary,
-                    child: Text(
-                      'U',
-                      style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: AssetImage('assets/images/logo.png'),
                   ),
                 ),
               ),
