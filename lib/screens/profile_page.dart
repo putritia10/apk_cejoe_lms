@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text('DANDY CANDRA PRATAMA', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16)),
+                const Text('PUTRI TIA', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16)),
                 const SizedBox(height: 16),
 
                 // white card with tabs
