@@ -22,6 +22,26 @@ class _ProfilePageState extends State<ProfilePage> {
   late String _initialCountry;
   late String _initialDesc;
 
+  int _selectedTab = 2;
+
+  final List<Map<String, String>> _kelas = [
+    {
+      'title': 'BAHASA INGGRIS: BUSINESS AND SCIENTIFIC',
+      'code': 'D4SM-41-GABI [ARS]',
+      'date': 'Tanggal Mulai Monday, 8 February 2021',
+    },
+    {
+      'title': 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+      'code': 'D4SM-42-03 [ADV]',
+      'date': 'Tanggal Mulai Monday, 8 February 2021',
+    },
+    {
+      'title': 'KEWARGANEGARAAN',
+      'code': 'D4SM-41-GABI [BBO], JUMAT 2',
+      'date': 'Tanggal Mulai Monday, 8 February 2021',
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -148,15 +168,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('About Me', style: TextStyle(color: Colors.grey[700])),
-                            Text('Kelas', style: TextStyle(color: Colors.grey[700])),
-                            Column(
-                              children: [
-                                Text('Edit Profile', style: TextStyle(color: _primary, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 6),
-                                Container(height: 3, width: 40, color: Colors.black54),
-                              ],
-                            ),
+                            _tabTitle('About Me', 0),
+                            _tabTitle('Kelas', 1),
+                            _tabTitle('Edit Profile', 2),
                           ],
                         ),
                         const SizedBox(height: 8),
@@ -169,43 +183,52 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildLabeledTextField('Nama Pertama', controller: _firstNameCtl),
-                      const SizedBox(height: 12),
-                      _buildLabeledTextField('Nama Terakhir', controller: _lastNameCtl),
-                      const SizedBox(height: 12),
-                      _buildLabeledTextField('E-mail Address', controller: _emailCtl),
-                      const SizedBox(height: 12),
-                      _buildLabeledTextField('Negara', controller: _countryCtl),
-                      const SizedBox(height: 12),
-                      _buildLabeledTextField('Deskripsi', controller: _descCtl, maxLines: 6),
+                  child: Builder(
+                    builder: (_) {
+                      if (_selectedTab == 0) {
+                        return _buildAboutMe();
+                      } else if (_selectedTab == 1) {
+                        return _buildKelasList();
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _buildLabeledTextField('Nama Pertama', controller: _firstNameCtl),
+                            const SizedBox(height: 12),
+                            _buildLabeledTextField('Nama Terakhir', controller: _lastNameCtl),
+                            const SizedBox(height: 12),
+                            _buildLabeledTextField('E-mail Address', controller: _emailCtl),
+                            const SizedBox(height: 12),
+                            _buildLabeledTextField('Negara', controller: _countryCtl),
+                            const SizedBox(height: 12),
+                            _buildLabeledTextField('Deskripsi', controller: _descCtl, maxLines: 6),
 
-                      const SizedBox(height: 18),
+                            const SizedBox(height: 18),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Simulate save and mark as saved
-                            setState(() {
-                              _initialFirst = _firstNameCtl.text;
-                              _initialLast = _lastNameCtl.text;
-                              _initialEmail = _emailCtl.text;
-                              _initialCountry = _countryCtl.text;
-                              _initialDesc = _descCtl.text;
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profil disimpan')));
-                          },
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _initialFirst = _firstNameCtl.text;
+                                    _initialLast = _lastNameCtl.text;
+                                    _initialEmail = _emailCtl.text;
+                                    _initialCountry = _countryCtl.text;
+                                    _initialDesc = _descCtl.text;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profil disimpan')));
+                                },
 
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: _primary, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                          child: const Text('Simpan'),
-                        ),
-                      ),
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: _primary, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                child: const Text('Simpan'),
+                              ),
+                            ),
 
-                      const SizedBox(height: 40),
-                    ],
+                            const SizedBox(height: 40),
+                          ],
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
@@ -214,6 +237,73 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     ));  }
+
+  Widget _tabTitle(String label, int index) {
+    final active = _selectedTab == index;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedTab = index),
+      child: Column(
+        children: [
+          Text(label, style: TextStyle(color: active ? (index==2 ? _primary : Colors.black87) : Colors.grey[700], fontWeight: active ? FontWeight.bold : FontWeight.normal)),
+          const SizedBox(height: 6),
+          Container(height: 3, width: 40, color: active ? Colors.black54 : Colors.transparent),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildKelasList() {
+    return Column(
+      children: _kelas.map((k) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: [
+              Container(width: 54, height: 36, decoration: BoxDecoration(color: Color(0xFF9ECFF0), borderRadius: BorderRadius.circular(18))),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(k['title'] ?? '', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    const SizedBox(height: 4),
+                    Text(k['code'] ?? '', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+                    const SizedBox(height: 4),
+                    Text(k['date'] ?? '', style: const TextStyle(color: Colors.black45, fontSize: 11)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildAboutMe() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('Nama Pertama', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(_firstNameCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+        Text('Nama Terakhir', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(_lastNameCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+        Text('E-mail', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(_emailCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+        Text('Deskripsi', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(_descCtl.text, style: const TextStyle()),
+        const SizedBox(height: 30),
+      ],
+    );
+  }
+
   Widget _buildLabeledTextField(String label, {required TextEditingController controller, int maxLines = 1}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

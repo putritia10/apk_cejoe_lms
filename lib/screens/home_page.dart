@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey[200],
                         borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
                         image: const DecorationImage(
-                          image: AssetImage('assets/images/bg_login.jpg'),
+                          image: AssetImage('assets/images/image.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -276,9 +276,9 @@ class CourseProgressItem extends StatelessWidget {
 }
 
 final List<Map<String, dynamic>> _sampleCourses = [
-  {'title': 'MOBILE PROGRAMMING', 'code': 'DESAIN-UI/UX', 'image': 'assets/images/bg_login.jpg', 'progress': 0.25},
-  {'title': 'PENGEMBANGAN MOBILE', 'code': 'MOBDEV-02', 'image': 'assets/images/bg_login.jpg', 'progress': 0.5},
-  {'title': 'SISTEM OPERASI', 'code': 'SYS-01', 'image': 'assets/images/bg_login.jpg', 'progress': 0.75},
-  {'title': 'JARINGAN', 'code': 'NET-01', 'image': 'assets/images/bg_login.jpg', 'progress': 0.1},
-  {'title': 'DESAIN GRAFIS', 'code': 'DG-01', 'image': 'assets/images/bg_login.jpg', 'progress': 0.9},
+  {'title': 'MOBILE PROGRAMMING', 'code': 'DESAIN-UI/UX', 'image': 'assets/images/image.png', 'progress': 0.25},
+  {'title': 'PENGEMBANGAN MOBILE', 'code': 'MOBDEV-02', 'image': 'assets/images/image.png', 'progress': 0.5},
+  {'title': 'SISTEM OPERASI', 'code': 'SYS-01', 'image': 'assets/images/image.png', 'progress': 0.75},
+  {'title': 'JARINGAN', 'code': 'NET-01', 'image': 'assets/images/image.png', 'progress': 0.1},
+  {'title': 'DESAIN GRAFIS', 'code': 'DG-01', 'image': 'assets/images/image.png', 'progress': 0.9},
 ];
