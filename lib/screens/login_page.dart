@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 18),
                       TextField(
                         decoration: InputDecoration(
-                          labelText: 'Email 365',
+                          labelText: 'Email',
                           labelStyle: TextStyle(color: Colors.grey[700]),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary, width: 1.2),
