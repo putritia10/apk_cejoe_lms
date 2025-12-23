@@ -281,27 +281,80 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildAboutMe() {
+    final firstAccess = 'Monday, 7 September 2020, 9:27 AM';
+    final lastAccess = 'Tuesday, 22 June 2021, 9:44 PM (now)';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Nama Pertama', style: const TextStyle(color: Colors.black54, fontSize: 12)),
-        const SizedBox(height: 6),
-        Text(_firstNameCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const Text('Informasi User', style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
-        Text('Nama Terakhir', style: const TextStyle(color: Colors.black54, fontSize: 12)),
-        const SizedBox(height: 6),
-        Text(_lastNameCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 12),
-        Text('E-mail', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+
+        const Text('Email address', style: TextStyle(color: Colors.black54, fontSize: 12)),
         const SizedBox(height: 6),
         Text(_emailCtl.text, style: const TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
-        Text('Deskripsi', style: const TextStyle(color: Colors.black54, fontSize: 12)),
+
+        const Text('Program Studi', style: TextStyle(color: Colors.black54, fontSize: 12)),
         const SizedBox(height: 6),
-        Text(_descCtl.text, style: const TextStyle()),
-        const SizedBox(height: 30),
+        const Text('Tekhnik Informatika', style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+
+        const Text('Fakultas', style: TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        const Text('TI', style: TextStyle(fontWeight: FontWeight.bold)),
+
+        const SizedBox(height: 20),
+        const Text('Aktivitas Login', style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+
+        const Text('First access to site', style: TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(firstAccess, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 12),
+
+        const Text('Last access to site', style: TextStyle(color: Colors.black54, fontSize: 12)),
+        const SizedBox(height: 6),
+        Text(lastAccess, style: const TextStyle(fontWeight: FontWeight.bold)),
+
+        const SizedBox(height: 18),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton.icon(
+            onPressed: _confirmLogout,
+            icon: const Icon(Icons.logout, color: Colors.white),
+            label: const Text('Log Out', style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _primary,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              elevation: 2,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 40),
       ],
     );
+  }
+
+  void _confirmLogout() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Konfirmasi Logout'),
+        content: const Text('Apakah Anda yakin ingin keluar dari akun ini?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Batal')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Logout')),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      // Placeholder: perform logout logic here (e.g., clear auth, navigate to login)
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Anda telah logout')));
+    }
   }
 
   Widget _buildLabeledTextField(String label, {required TextEditingController controller, int maxLines = 1}) {
