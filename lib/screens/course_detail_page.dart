@@ -29,8 +29,9 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   });
 
   final List<Map<String, dynamic>> _tasks = [
-    {'title': 'Latihan 1: Observasi UI', 'due': '20 Jan', 'done': false},
-    {'title': 'Kuis: Pengantar UI', 'due': '25 Jan', 'done': false},
+    {'type': 'quiz', 'title': 'Quiz Review 01', 'deadline': 'Tenggat Waktu : 26 Februari 2021 23:59 WIB', 'done': true},
+    {'type': 'tugas', 'title': 'Tugas 01 - UID Android Mobile Game', 'deadline': 'Tenggat Waktu : 26 Februari 2021 23:59 WIB', 'done': false},
+    {'type': 'quiz', 'title': 'Kuis - Assessment 2', 'deadline': 'Tenggat Waktu : 26 Februari 2021 23:59 WIB', 'done': true},
   ];
   @override
   Widget build(BuildContext context) {
@@ -184,6 +185,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   }
 
   Widget _buildTaskItem(Map<String, dynamic> t) {
+    final isQuiz = (t['type'] as String) == 'quiz';
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Container(
@@ -194,29 +197,62 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
           boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.03), blurRadius: 8)],
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.assignment, color: Colors.grey),
+            // left badge + icon
+            Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(color: isQuiz ? const Color(0xFF9ECFF0) : const Color(0xFF9ECFF0), borderRadius: BorderRadius.circular(12)),
+                  child: Text(isQuiz ? 'QUIZ' : 'TUGAS', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
+                  child: Icon(isQuiz ? Icons.quiz : Icons.task, color: Colors.grey[700], size: 30),
+                ),
+              ],
             ),
+
             const SizedBox(width: 12),
-            Expanded(child: Text(t['title'] as String, style: const TextStyle(fontWeight: FontWeight.w500))),
-            const SizedBox(width: 8),
+
+            // title and deadline
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(t['title'] as String, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 6),
+                  Text(t['deadline'] as String, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                ],
+              ),
+            ),
+
+            // status
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(t['due'] as String, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                const SizedBox(height: 6),
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(color: (t['done'] as bool) ? Colors.green[600] : Colors.grey[300], shape: BoxShape.circle),
-                  child: Icon((t['done'] as bool) ? Icons.check : Icons.hourglass_empty, color: (t['done'] as bool) ? Colors.white : Colors.grey[700], size: 16),
-                )
+                if (t['done'] == true)
+                  Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(color: Colors.green[600], shape: BoxShape.circle),
+                    child: const Icon(Icons.check, color: Colors.white, size: 18),
+                  )
+                else
+                  Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(color: Colors.grey[200], shape: BoxShape.circle),
+                    child: const Icon(Icons.more_horiz, color: Colors.grey, size: 18),
+                  ),
+
+                const SizedBox(height: 12),
               ],
-            )
+            ),
           ],
         ),
       ),
