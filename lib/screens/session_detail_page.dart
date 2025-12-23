@@ -90,7 +90,7 @@ class _SessionDetailPageState extends State<SessionDetailPage> {
                   const SizedBox(height: 12),
 
                   if (_selectedTab == 0) ..._materials.map((m) => _buildMaterialCard(m)),
-                  if (_selectedTab == 1) ..._tasks.map((t) => _buildTaskRow(t)),
+                  if (_selectedTab == 1) ...(_tasks.isEmpty ? [_buildEmptyTasks()] : _tasks.map((t) => _buildTaskRow(t))),
 
                   const SizedBox(height: 40),
                 ],
@@ -175,6 +175,25 @@ class _SessionDetailPageState extends State<SessionDetailPage> {
               ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyTasks() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: Column(
+        children: [
+          SizedBox(
+            width: 200,
+            height: 160,
+            child: Center(child: Icon(Icons.inbox, size: 120, color: Colors.grey[300])),
+          ),
+          const SizedBox(height: 12),
+          const Text('Tidak Ada Tugas Dan Kuis Hari Ini', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          const Text('Silakan kembali lagi nanti.', style: TextStyle(color: Colors.grey, fontSize: 12)),
+        ],
       ),
     );
   }
