@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -111,10 +112,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         IconButton(
                           icon: const Icon(Icons.arrow_back, color: Colors.white),
                           onPressed: () async {
-                            final navigator = Navigator.of(context);
                             final ok = await _maybePop();
                             if (!mounted) return;
-                            if (ok) navigator.pop();
+                            if (ok) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => const HomePage()),
+                                (route) => false,
+                              );
+                            }
                           },
                         ),
                         const Spacer(),

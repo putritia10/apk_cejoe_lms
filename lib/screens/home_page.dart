@@ -13,6 +13,11 @@ class _HomePageState extends State<HomePage> {
   final Color _primary = const Color(0xFFB52F2F);
 
   void _onNavTap(int idx) {
+    if (idx == 3) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfilePage()));
+      return;
+    }
+
     setState(() => _selectedIndex = idx);
     // For now we only have Home; other tabs can be added later
   }
@@ -50,10 +55,12 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         onTap: _onNavTap,
         selectedItemColor: _primary,
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: 'Kelas Saya'),
           BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifikasi'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
       ),
     );
@@ -81,25 +88,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // small profile shortcut button (tappable)
-          InkWell(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfilePage())),
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              child: Row(
-                children: const [
-                  Text('MAHASISWA', style: TextStyle(fontSize: 12, color: Colors.white)),
-                  SizedBox(width: 6),
-                  Icon(Icons.person, color: Colors.white, size: 18),
-                ],
-              ),
-            ),
-          ),
+          const SizedBox(width: 8),
         ],
       ),
     );
