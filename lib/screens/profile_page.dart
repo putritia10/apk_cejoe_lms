@@ -10,9 +10,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final Color _primary = const Color(0xFFB52F2F);
 
-  final _firstNameCtl = TextEditingController(text: 'DANDY');
-  final _lastNameCtl = TextEditingController(text: 'CANDRA PRATAMA');
-  final _emailCtl = TextEditingController(text: 'dandy@example.com');
+  final _firstNameCtl = TextEditingController(text: 'PUTRI');
+  final _lastNameCtl = TextEditingController(text: 'TIA');
+  final _emailCtl = TextEditingController(text: 'Putritia@gmail.com');
   final _countryCtl = TextEditingController(text: 'Indonesia');
   final _descCtl = TextEditingController(text: 'Deskripsi singkat tentang mahasiswa...');
 
