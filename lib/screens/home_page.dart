@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'course_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,6 +41,12 @@ class _HomePageState extends State<HomePage> {
                         code: _sampleCourses[index]['code']!,
                         imageAsset: _sampleCourses[index]['image']!,
                         progress: _sampleCourses[index]['progress']!,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => CourseDetailPage(
+                            title: _sampleCourses[index]['title']!,
+                            code: _sampleCourses[index]['code']!,
+                          )));
+                        },
                       ),
                       childCount: _sampleCourses.length,
                     ),
@@ -111,7 +118,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 8)],
+              boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.03), blurRadius: 8)],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +171,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 8)],
+              boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.03), blurRadius: 8)],
             ),
             child: Column(
               children: [
@@ -216,49 +223,54 @@ class CourseProgressItem extends StatelessWidget {
   final String code;
   final String imageAsset;
   final double progress; // 0..1
+  final VoidCallback? onTap;
 
-  const CourseProgressItem({Key? key, required this.title, required this.code, required this.imageAsset, required this.progress}) : super(key: key);
+  const CourseProgressItem({Key? key, required this.title, required this.code, required this.imageAsset, required this.progress, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6)],
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 64,
-              height: 64,
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Center(child: Icon(Icons.image, color: Colors.grey[600])),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 6),
-                    Text(code, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                    const SizedBox(height: 8),
-                    LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: Colors.grey.shade200, color: Colors.red.shade400),
-                    const SizedBox(height: 4),
-                    Text('${(progress * 100).toStringAsFixed(0)}% lengkap', style: const TextStyle(fontSize: 11, color: Colors.grey)),
-                  ],
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.03), blurRadius: 6)],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                margin: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(6),
                 ),
+                child: Center(child: Icon(Icons.image, color: Colors.grey[600])),
               ),
-            )
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 6),
+                      Text(code, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                      const SizedBox(height: 8),
+                      LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: Colors.grey.shade200, color: Colors.red.shade400),
+                      const SizedBox(height: 4),
+                      Text('${(progress * 100).toStringAsFixed(0)}% lengkap', style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
+                        color: Color.fromRGBO(0,0,0,0.15),
                         blurRadius: 8,
                         offset: Offset(0, 4),
                       )
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Color.fromRGBO(0,0,0,0.06),
                         blurRadius: 12,
                         offset: Offset(0, 6),
                       )
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                   clipper: _BottomWaveClipper(),
                   child: Container(
                     height: size.height * 0.18,
-                    color: primary.withOpacity(0.95),
+                    color: Color.fromRGBO(181,47,47,0.95),
                   ),
                 ),
               ),

@@ -150,7 +150,7 @@ class _ProfileContentState extends State<ProfileContent> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.12), blurRadius: 8)],
+                      boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.12), blurRadius: 8)],
                     ),
                     child: CircleAvatar(
                       radius: 56,
@@ -171,7 +171,7 @@ class _ProfileContentState extends State<ProfileContent> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 12)],
+                      boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.06), blurRadius: 12)],
                     ),
                     child: Column(
                       children: [
