@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+// Reusable profile content widget which can be embedded inside HomePage
+class ProfileContent extends StatefulWidget {
+  final VoidCallback? onRequestBack;
+
+  const ProfileContent({Key? key, this.onRequestBack}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileContent> createState() => _ProfileContentState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileContentState extends State<ProfileContent> {
   final Color _primary = const Color(0xFFB52F2F);
 
   final _firstNameCtl = TextEditingController(text: 'PUTRI');
@@ -95,9 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return WillPopScope(
       onWillPop: _maybePop,
-      child: Scaffold(
-        backgroundColor: Colors.grey[50],
-        body: Stack(
+      child: Stack(
         children: [
           Column(
             children: [
@@ -115,10 +116,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             final ok = await _maybePop();
                             if (!mounted) return;
                             if (ok) {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => const HomePage()),
-                                (route) => false,
-                              );
+                              if (widget.onRequestBack != null) {
+                                widget.onRequestBack!();
+                              } else {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (_) => const HomePage()),
+                                  (route) => false,
+                                );
+                              }
                             }
                           },
                         ),
@@ -241,7 +246,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-    ));  }
+    );
+  }
 
   Widget _tabTitle(String label, int index) {
     final active = _selectedTab == index;
@@ -381,5 +387,15 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ],
     );
+  }
+}
+
+// Backwards compatible page wrapper (keeps previous usage of ProfilePage working)
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: ProfileContent());
   }
 }

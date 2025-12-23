@@ -13,13 +13,7 @@ class _HomePageState extends State<HomePage> {
   final Color _primary = const Color(0xFFB52F2F);
 
   void _onNavTap(int idx) {
-    if (idx == 3) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfilePage()));
-      return;
-    }
-
     setState(() => _selectedIndex = idx);
-    // For now we only have Home; other tabs can be added later
   }
 
   @override
@@ -27,28 +21,38 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(child: _buildHeader(context)),
-            SliverToBoxAdapter(child: SizedBox(height: 10)),
-            SliverToBoxAdapter(child: _buildUpcomingTask(context)),
-            SliverToBoxAdapter(child: SizedBox(height: 10)),
-            SliverToBoxAdapter(child: _buildAnnouncements(context)),
-            SliverToBoxAdapter(child: SizedBox(height: 10)),
-            SliverToBoxAdapter(child: _buildProgressTitle()),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => CourseProgressItem(
-                  title: _sampleCourses[index]['title']!,
-                  code: _sampleCourses[index]['code']!,
-                  imageAsset: _sampleCourses[index]['image']!,
-                  progress: _sampleCourses[index]['progress']!,
-                ),
-                childCount: _sampleCourses.length,
-              ),
-            ),
-            SliverToBoxAdapter(child: SizedBox(height: 80)),
-          ],
+        child: Builder(
+          builder: (context) {
+            if (_selectedIndex == 0) {
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(child: _buildHeader(context)),
+                  SliverToBoxAdapter(child: SizedBox(height: 10)),
+                  SliverToBoxAdapter(child: _buildUpcomingTask(context)),
+                  SliverToBoxAdapter(child: SizedBox(height: 10)),
+                  SliverToBoxAdapter(child: _buildAnnouncements(context)),
+                  SliverToBoxAdapter(child: SizedBox(height: 10)),
+                  SliverToBoxAdapter(child: _buildProgressTitle()),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => CourseProgressItem(
+                        title: _sampleCourses[index]['title']!,
+                        code: _sampleCourses[index]['code']!,
+                        imageAsset: _sampleCourses[index]['image']!,
+                        progress: _sampleCourses[index]['progress']!,
+                      ),
+                      childCount: _sampleCourses.length,
+                    ),
+                  ),
+                  SliverToBoxAdapter(child: SizedBox(height: 80)),
+                ],
+              );
+            } else if (_selectedIndex == 3) {
+              return ProfileContent(onRequestBack: () => setState(() => _selectedIndex = 0));
+            } else {
+              return const Center(child: Text('Belum tersedia'));
+            }
+          },
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -173,11 +177,8 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/image.png'),
-                          fit: BoxFit.cover,
-                        ),
                       ),
+                      child: const Center(child: Icon(Icons.image, color: Colors.grey)),
                     ),
                     Expanded(
                       child: Padding(
@@ -237,8 +238,8 @@ class CourseProgressItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(6),
-                image: DecorationImage(image: AssetImage(imageAsset), fit: BoxFit.cover),
               ),
+              child: Center(child: Icon(Icons.image, color: Colors.grey[600])),
             ),
             Expanded(
               child: Padding(
