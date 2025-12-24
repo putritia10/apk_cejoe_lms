@@ -328,21 +328,6 @@ final List<Map<String, dynamic>> _sampleCourses = [
     'code': 'DESAIN-UI/UX',
     'image': 'assets/images/image.png',
     'progress': 0.25,
-    'sessions': [
-      {
-        'label': 'Pertemuan 2',
-        'title': 'Konsep User Interface Design',
-        'meta': 'Konsep dasar User Interface Design dan contoh materi',
-        'materials': [
-          {'title': 'Zoom Meeting Syncronous', 'type': 'link', 'done': true},
-          {'title': 'Elemen-elemen Antarmuka Pengguna', 'type': 'file', 'done': true},
-          {'title': 'UID Guidelines and Principles', 'type': 'file', 'done': true},
-          {'title': 'User Profile', 'type': 'file', 'done': false},
-          {'title': 'Principles of User Interface Design', 'type': 'file', 'done': false},
-        ],
-        'tasks': [],
-      }
-    ],
   },
   {'title': 'PENGEMBANGAN MOBILE', 'code': 'MOBDEV-02', 'image': 'assets/images/image.png', 'progress': 0.5},
   {'title': 'SISTEM OPERASI', 'code': 'SYS-01', 'image': 'assets/images/image.png', 'progress': 0.75},
