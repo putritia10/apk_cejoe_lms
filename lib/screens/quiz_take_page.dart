@@ -114,6 +114,24 @@ class _QuizTakePageState extends State<QuizTakePage> {
 
                   const SizedBox(height: 24),
 
+                  // Bacaan
+                  const Text('Bacaan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
+                    ),
+                    child: const Text(
+                      'Dalam dunia perancangan antarmuka pengguna, konsistensi merupakan salah satu prinsip utama yang harus diperhatikan. Konsistensi memastikan bahwa elemen-elemen visual dan interaksi dalam aplikasi atau website memberikan pengalaman yang seragam kepada pengguna.',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
                   // Question
                   const Text('Pertanyaan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 12),
@@ -188,20 +206,29 @@ class _QuizTakePageState extends State<QuizTakePage> {
                             setState(() {
                               _completedQuestions.add(_currentQuestion);
                             });
-                            // Submit quiz
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Kuis selesai!')),
-                            );
-                            Navigator.of(context).pop();
+                            // Check if last question
+                            if (_currentQuestion >= _questions.length - 1) {
+                              // Submit quiz
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Kuis selesai!')),
+                              );
+                              Navigator.of(context).pop();
+                            } else {
+                              // Go to next question
+                              setState(() {
+                                _currentQuestion++;
+                                _selectedAnswer = 'A'; // Reset selection
+                              });
+                            }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            backgroundColor: _currentQuestion >= _questions.length - 1 ? Colors.green : primary,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
-                          child: const Text(
-                            'Selesai',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          child: Text(
+                            _currentQuestion >= _questions.length - 1 ? 'Selesai' : 'Soal Selanjutnya',
+                            style: const TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),
