@@ -8,31 +8,19 @@ class QuizTakePage extends StatefulWidget {
 }
 
 class _QuizTakePageState extends State<QuizTakePage> {
-  int _currentQuestion = 0;
-  String _selectedAnswer = 'A'; // Default selected
-  int _timeLeft = 15 * 60; // 15 minutes in seconds
+  int _currentQuestion = 1; // Start at question 2 (0-indexed as 1)
+  String _selectedAnswer = 'C'; // Default selected for question 2
+  final Set<int> _completedQuestions = {0}; // Question 1 is completed
 
   final List<String> _questions = [
     'Radio button dapat digunakan untuk menentukan ?',
-    // Add more questions if needed, but for now just one
+    'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu ?',
   ];
 
   final List<List<String>> _options = [
     ['Jenis Kelamin', 'Alamat', 'Hobby', 'Riwayat Pendidikan', 'Umur'],
+    ['Integrasi', 'Standarisasi', 'Konsistensi', 'Koefensi', 'Koreksi'],
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    // Start timer
-    // Note: In a real app, you'd use a Timer.periodic
-  }
-
-  String _formatTime(int seconds) {
-    int minutes = seconds ~/ 60;
-    int secs = seconds % 60;
-    return '${minutes.toString().padLeft(2, '0')} : ${secs.toString().padLeft(2, '0')}';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +70,14 @@ class _QuizTakePageState extends State<QuizTakePage> {
                     runSpacing: 8,
                     children: List.generate(15, (index) {
                       bool isCurrent = index == _currentQuestion;
+                      bool isCompleted = _completedQuestions.contains(index);
+                      Color bgColor = isCurrent ? primary : (isCompleted ? Colors.green : Colors.white);
+                      Color textColor = (isCurrent || isCompleted) ? Colors.white : Colors.black;
                       return Container(
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: isCurrent ? primary : Colors.white,
+                          color: bgColor,
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.grey.shade300),
                         ),
@@ -94,7 +85,7 @@ class _QuizTakePageState extends State<QuizTakePage> {
                           child: Text(
                             '${index + 1}',
                             style: TextStyle(
-                              color: isCurrent ? Colors.white : Colors.black,
+                              color: textColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -168,32 +159,60 @@ class _QuizTakePageState extends State<QuizTakePage> {
 
                   const SizedBox(height: 24),
 
-                  // Navigation button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Next question logic
-                      if (_currentQuestion < 14) {
-                        setState(() {
-                          _currentQuestion++;
-                          _selectedAnswer = 'A'; // Reset selection
-                        });
-                      } else {
-                        // Submit quiz
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Kuis selesai!')),
-                        );
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primary,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
-                    child: Text(
-                      _currentQuestion < 14 ? 'Soal Selanjutnya' : 'Selesai',
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                  // Navigation buttons
+                  Row(
+                    children: [
+                      if (_currentQuestion > 0)
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              setState(() {
+                                _currentQuestion--;
+                                _selectedAnswer = 'A'; // Reset to default
+                              });
+                            },
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              side: BorderSide(color: primary),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Text('Soal Sebelumnya', style: TextStyle(color: primary)),
+                          ),
+                        ),
+                      if (_currentQuestion > 0) const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Mark current as completed
+                            setState(() {
+                              _completedQuestions.add(_currentQuestion);
+                            });
+                            // Next question logic
+                            if (_currentQuestion < _questions.length - 1) {
+                              setState(() {
+                                _currentQuestion++;
+                                _selectedAnswer = 'A'; // Reset selection
+                              });
+                            } else {
+                              // Submit quiz
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Kuis selesai!')),
+                              );
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primary,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: Text(
+                            _currentQuestion < _questions.length - 1 ? 'Soal Selanjutnya' : 'Selesai',
+                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 40),
