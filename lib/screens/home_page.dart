@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'course_detail_page.dart';
 import 'session_detail_page.dart';
+import 'class_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,6 +57,8 @@ class _HomePageState extends State<HomePage> {
                   SliverToBoxAdapter(child: SizedBox(height: 80)),
                 ],
               );
+            } else if (_selectedIndex == 1) {
+              return ClassListContent();
             } else if (_selectedIndex == 3) {
               return ProfileContent(onRequestBack: () => setState(() => _selectedIndex = 0));
             } else {
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           CircleAvatar(
             radius: 28,
             backgroundColor: _primary,
-            child: Text('D', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
           const SizedBox(width: 12),
           Expanded(
