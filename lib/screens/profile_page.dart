@@ -96,8 +96,16 @@ class _ProfileContentState extends State<ProfileContent> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return WillPopScope(
-      onWillPop: _maybePop,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) return;
+        _maybePop().then((ok) {
+          if (ok && mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+      },
       child: Stack(
         children: [
           Column(
@@ -119,10 +127,12 @@ class _ProfileContentState extends State<ProfileContent> {
                               if (widget.onRequestBack != null) {
                                 widget.onRequestBack!();
                               } else {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(builder: (_) => const HomePage()),
-                                  (route) => false,
-                                );
+                                if (mounted) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) => const HomePage()),
+                                    (route) => false,
+                                  );
+                                }
                               }
                             }
                           },
@@ -364,7 +374,9 @@ class _ProfileContentState extends State<ProfileContent> {
 
     if (confirm == true) {
       // Placeholder: perform logout logic here (e.g., clear auth, navigate to login)
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Anda telah logout')));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Anda telah logout')));
+      }
     }
   }
 

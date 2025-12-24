@@ -4,8 +4,10 @@ class SessionDetailPage extends StatefulWidget {
   final String label;
   final String title;
   final String meta;
+  final List<Map<String, dynamic>>? materials;
+  final List<Map<String, dynamic>>? tasks;
 
-  const SessionDetailPage({Key? key, required this.label, required this.title, required this.meta}) : super(key: key);
+  const SessionDetailPage({Key? key, required this.label, required this.title, required this.meta, this.materials, this.tasks}) : super(key: key);
 
   @override
   State<SessionDetailPage> createState() => _SessionDetailPageState();
@@ -13,21 +15,21 @@ class SessionDetailPage extends StatefulWidget {
 
 class _SessionDetailPageState extends State<SessionDetailPage> {
   int _selectedTab = 0;
+  late List<Map<String, dynamic>> _materials;
+  late List<Map<String, dynamic>> _tasks;
 
-  final List<Map<String, dynamic>> _materials = [
-    {'title': 'Zoom Meeting Syncronous', 'type': 'link', 'done': true},
-    {'title': 'Pengantar User Interface Design', 'type': 'file', 'done': false},
-    {'title': 'Empat Teori Dasar Antarmuka Pengguna', 'type': 'file', 'done': false},
-    {'title': 'Empat Teori Dasar Antarmuka Pengguna', 'type': 'file', 'done': false},
-    {'title': 'User Interface Design for Beginner', 'type': 'file', 'done': true},
-    {'title': '20 Prinsip Desain', 'type': 'file', 'done': true},
-    {'title': 'Best Practice UI Design', 'type': 'file', 'done': false},
-  ];
-
-  final List<Map<String, dynamic>> _tasks = [
-    {'title': 'Quiz Review 01', 'type': 'quiz', 'done': true},
-    {'title': 'Tugas 01 - UID Android Mobile Game', 'type': 'tugas', 'done': false},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _materials = widget.materials ?? [
+      {'title': 'Zoom Meeting Syncronous', 'type': 'link', 'done': true},
+      {'title': 'Elemen-elemen Antarmuka Pengguna', 'type': 'file', 'done': true},
+      {'title': 'UID Guidelines and Principles', 'type': 'file', 'done': true},
+      {'title': 'User Profile', 'type': 'file', 'done': false},
+      {'title': 'Principles of User Interface Design', 'type': 'file', 'done': false},
+    ];
+    _tasks = widget.tasks ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {

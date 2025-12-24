@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'course_detail_page.dart';
+import 'session_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
                         code: _sampleCourses[index]['code']!,
                         imageAsset: _sampleCourses[index]['image']!,
                         progress: _sampleCourses[index]['progress']!,
+                        sessions: _sampleCourses[index]['sessions'] as List<Map<String, Object>>?,
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (_) => CourseDetailPage(
                             title: _sampleCourses[index]['title']!,
@@ -223,12 +225,17 @@ class CourseProgressItem extends StatelessWidget {
   final String code;
   final String imageAsset;
   final double progress; // 0..1
+  final List<Map<String, Object>>? sessions;
   final VoidCallback? onTap;
 
-  const CourseProgressItem({Key? key, required this.title, required this.code, required this.imageAsset, required this.progress, this.onTap}) : super(key: key);
+  const CourseProgressItem({Key? key, required this.title, required this.code, required this.imageAsset, required this.progress, this.sessions, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? preview = (sessions != null && sessions!.isNotEmpty)
+        ? sessions!.firstWhere((s) => (s['label'] as String) == 'Pertemuan 2', orElse: () => sessions!.first)
+        : null;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
@@ -240,35 +247,70 @@ class CourseProgressItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [BoxShadow(color: Color.fromRGBO(0,0,0,0.03), blurRadius: 6)],
           ),
-          child: Row(
+          child: Column(
             children: [
-              Container(
-                width: 64,
-                height: 64,
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Center(child: Icon(Icons.image, color: Colors.grey[600])),
+              Row(
+                children: [
+                  Container(
+                    width: 64,
+                    height: 64,
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Center(child: Icon(Icons.image, color: Colors.grey[600])),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 6),
+                          Text(code, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                          const SizedBox(height: 8),
+                          LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: Colors.grey.shade200, color: Colors.red.shade400),
+                          const SizedBox(height: 4),
+                          Text('${(progress * 100).toStringAsFixed(0)}% lengkap', style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 6),
-                      Text(code, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                      const SizedBox(height: 8),
-                      LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: Colors.grey.shade200, color: Colors.red.shade400),
-                      const SizedBox(height: 4),
-                      Text('${(progress * 100).toStringAsFixed(0)}% lengkap', style: const TextStyle(fontSize: 11, color: Colors.grey)),
-                    ],
+
+              if (preview != null)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => SessionDetailPage(
+                      label: preview['label'] as String,
+                      title: preview['title'] as String,
+                      meta: preview['meta'] as String,
+                      materials: (preview['materials'] as List<dynamic>?)?.cast<Map<String, dynamic>>(),
+                      tasks: (preview['tasks'] as List<dynamic>?)?.cast<Map<String, dynamic>>(),
+                    )));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(color: Colors.grey[50], borderRadius: BorderRadius.circular(12)),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                          decoration: BoxDecoration(color: const Color(0xFF9ECFF0), borderRadius: BorderRadius.circular(8)),
+                          child: Text(preview['label'] as String, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(child: Text(preview['title'] as String, style: const TextStyle(fontWeight: FontWeight.bold))),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.chevron_right, color: Colors.grey),
+                      ],
+                    ),
                   ),
                 ),
-              )
             ],
           ),
         ),
@@ -278,7 +320,27 @@ class CourseProgressItem extends StatelessWidget {
 }
 
 final List<Map<String, dynamic>> _sampleCourses = [
-  {'title': 'MOBILE PROGRAMMING', 'code': 'DESAIN-UI/UX', 'image': 'assets/images/image.png', 'progress': 0.25},
+  {
+    'title': 'MOBILE PROGRAMMING',
+    'code': 'DESAIN-UI/UX',
+    'image': 'assets/images/image.png',
+    'progress': 0.25,
+    'sessions': [
+      {
+        'label': 'Pertemuan 2',
+        'title': 'Konsep User Interface Design',
+        'meta': 'Konsep dasar User Interface Design dan contoh materi',
+        'materials': [
+          {'title': 'Zoom Meeting Syncronous', 'type': 'link', 'done': true},
+          {'title': 'Elemen-elemen Antarmuka Pengguna', 'type': 'file', 'done': true},
+          {'title': 'UID Guidelines and Principles', 'type': 'file', 'done': true},
+          {'title': 'User Profile', 'type': 'file', 'done': false},
+          {'title': 'Principles of User Interface Design', 'type': 'file', 'done': false},
+        ],
+        'tasks': [],
+      }
+    ],
+  },
   {'title': 'PENGEMBANGAN MOBILE', 'code': 'MOBDEV-02', 'image': 'assets/images/image.png', 'progress': 0.5},
   {'title': 'SISTEM OPERASI', 'code': 'SYS-01', 'image': 'assets/images/image.png', 'progress': 0.75},
   {'title': 'JARINGAN', 'code': 'NET-01', 'image': 'assets/images/image.png', 'progress': 0.1},
