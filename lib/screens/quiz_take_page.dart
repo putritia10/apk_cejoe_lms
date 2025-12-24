@@ -8,18 +8,20 @@ class QuizTakePage extends StatefulWidget {
 }
 
 class _QuizTakePageState extends State<QuizTakePage> {
-  int _currentQuestion = 1; // Start at question 2 (0-indexed as 1)
-  String _selectedAnswer = 'C'; // Default selected for question 2
-  final Set<int> _completedQuestions = {0}; // Question 1 is completed
+  int _currentQuestion = 2; // Start at question 3 (0-indexed as 2)
+  String _selectedAnswer = 'A'; // Default selected for question 3
+  final Set<int> _completedQuestions = {0,1,2,3,4,5,6,7,8,9,10,11,12,13}; // Questions 1-14 completed
 
   final List<String> _questions = [
     'Radio button dapat digunakan untuk menentukan ?',
+    'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu ?',
     'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu ?',
   ];
 
   final List<List<String>> _options = [
     ['Jenis Kelamin', 'Alamat', 'Hobby', 'Riwayat Pendidikan', 'Umur'],
     ['Integrasi', 'Standarisasi', 'Konsistensi', 'Koefensi', 'Koreksi'],
+    ['Jenis Kelamin', 'Alamat', 'Hobby', 'Riwayat Pendidikan', 'Umur'],
   ];
 
   @override
@@ -159,27 +161,26 @@ class _QuizTakePageState extends State<QuizTakePage> {
 
                   const SizedBox(height: 24),
 
-                  // Navigation buttons
+                  // Navigation & Aksi
                   Row(
                     children: [
-                      if (_currentQuestion > 0)
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () {
-                              setState(() {
-                                _currentQuestion--;
-                                _selectedAnswer = 'A'; // Reset to default
-                              });
-                            },
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              side: BorderSide(color: primary),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Text('Soal Sebelumnya', style: TextStyle(color: primary)),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: _currentQuestion > 0 ? () {
+                            setState(() {
+                              _currentQuestion--;
+                              _selectedAnswer = 'A'; // Reset to default
+                            });
+                          } : null,
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            side: BorderSide(color: primary),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
+                          child: Text('Soal Sebelumnya', style: TextStyle(color: _currentQuestion > 0 ? primary : Colors.grey)),
                         ),
-                      if (_currentQuestion > 0) const SizedBox(width: 12),
+                      ),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -187,28 +188,20 @@ class _QuizTakePageState extends State<QuizTakePage> {
                             setState(() {
                               _completedQuestions.add(_currentQuestion);
                             });
-                            // Next question logic
-                            if (_currentQuestion < _questions.length - 1) {
-                              setState(() {
-                                _currentQuestion++;
-                                _selectedAnswer = 'A'; // Reset selection
-                              });
-                            } else {
-                              // Submit quiz
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Kuis selesai!')),
-                              );
-                              Navigator.of(context).pop();
-                            }
+                            // Submit quiz
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Kuis selesai!')),
+                            );
+                            Navigator.of(context).pop();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primary,
+                            backgroundColor: Colors.green,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
-                          child: Text(
-                            _currentQuestion < _questions.length - 1 ? 'Soal Selanjutnya' : 'Selesai',
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                          child: const Text(
+                            'Selesai',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),
