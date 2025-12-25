@@ -87,8 +87,35 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 18),
                       TextField(
                         decoration: InputDecoration(
+                          labelText: 'Nama Mahasiswa',
+                          labelStyle: TextStyle(color: Colors.grey[700], fontSize: 12),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary, width: 1.2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary, width: 2),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'NPM',
+                          labelStyle: TextStyle(color: Colors.grey[700], fontSize: 12),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary, width: 1.2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary, width: 2),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        decoration: InputDecoration(
                           labelText: 'Email',
-                          labelStyle: TextStyle(color: Colors.grey[700]),
+                          labelStyle: TextStyle(color: Colors.grey[700], fontSize: 12),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary, width: 1.2),
                           ),
@@ -98,12 +125,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 12),
                       TextField(
                         obscureText: _obscure,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.grey[700]),
+                          labelStyle: TextStyle(color: Colors.grey[700], fontSize: 12),
                           suffixIcon: GestureDetector(
                             onTap: () => setState(() => _obscure = !_obscure),
                             child: Icon(
@@ -120,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-                      const SizedBox(height: 26),
+                      const SizedBox(height: 16),
 
                       // Login button
                       SizedBox(
@@ -141,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                       Center(
                         child: TextButton(
                           onPressed: () {},
-                          child: Text('Bantuan ?', style: TextStyle(color: primary)),
+                          child: Text('Bantuan ?', style: TextStyle(color: primary, fontWeight: FontWeight.bold, fontSize: 16)),
                         ),
                       ),
                     ],
