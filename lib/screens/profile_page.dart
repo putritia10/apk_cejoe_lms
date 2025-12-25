@@ -118,25 +118,6 @@ class _ProfileContentState extends State<ProfileContent> {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Row(
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () async {
-                            final ok = await _maybePop();
-                            if (!mounted) return;
-                            if (ok) {
-                              if (widget.onRequestBack != null) {
-                                widget.onRequestBack!();
-                              } else {
-                                if (mounted) {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(builder: (_) => const HomePage()),
-                                    (route) => false,
-                                  );
-                                }
-                              }
-                            }
-                          },
-                        ),
                         const Spacer(),
                       ],
                     ),
@@ -165,7 +146,7 @@ class _ProfileContentState extends State<ProfileContent> {
                     child: CircleAvatar(
                       radius: 56,
                       backgroundColor: _primary,
-                      backgroundImage: AssetImage('assets/images/logo.png'),
+                      child: Text('P', style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ),
