@@ -3,6 +3,7 @@ import 'profile_page.dart';
 import 'course_detail_page.dart';
 import 'session_detail_page.dart';
 import 'class_list_page.dart';
+import 'announcements_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -168,7 +169,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Pengumuman Terakhir', style: TextStyle(fontWeight: FontWeight.bold)),
-              TextButton(onPressed: () {}, child: const Text('Lihat Semua'))
+              TextButton(onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AnnouncementsPage()));
+              }, child: const Text('Lihat Semua'))
             ],
           ),
           const SizedBox(height: 8),

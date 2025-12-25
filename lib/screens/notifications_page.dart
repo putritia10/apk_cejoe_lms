@@ -65,6 +65,7 @@ class NotificationsPage extends StatelessWidget {
               itemCount: notifications.length,
               itemBuilder: (context, index) {
                 final notification = notifications[index];
+                final isQuiz = notification['message']!.contains('Quiz');
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   padding: const EdgeInsets.all(16),
@@ -73,17 +74,30 @@ class NotificationsPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
                   ),
-                  child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        notification['message']!,
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                      Icon(
+                        isQuiz ? Icons.quiz : Icons.description,
+                        color: primary,
+                        size: 24,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        notification['time']!,
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              notification['message']!,
+                              style: TextStyle(color: Colors.black87, fontSize: 14),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              notification['time']!,
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
