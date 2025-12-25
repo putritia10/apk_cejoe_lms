@@ -4,6 +4,7 @@ import 'course_detail_page.dart';
 import 'session_detail_page.dart';
 import 'class_list_page.dart';
 import 'announcements_page.dart';
+import 'notifications_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +18,11 @@ class _HomePageState extends State<HomePage> {
   final Color _primary = const Color(0xFFB52F2F);
 
   void _onNavTap(int idx) {
-    setState(() => _selectedIndex = idx);
+    if (idx == 2) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationsPage()));
+    } else {
+      setState(() => _selectedIndex = idx);
+    }
   }
 
   @override
