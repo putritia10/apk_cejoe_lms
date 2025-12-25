@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quiz_question_review_page.dart';
 
 class QuizReviewPage extends StatelessWidget {
   const QuizReviewPage({Key? key}) : super(key: key);
@@ -114,6 +115,8 @@ class QuizReviewPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(q['question']!, style: TextStyle(color: Colors.black87)),
+                              const SizedBox(height: 12),
                               Text('Jawaban Tersimpan', style: TextStyle(fontWeight: FontWeight.bold)),
                               const SizedBox(height: 4),
                               Text(q['answer']!, style: TextStyle(color: Colors.black87)),
@@ -122,7 +125,15 @@ class QuizReviewPage extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: OutlinedButton(
                                   onPressed: () {
-                                    // TODO: Navigate to question detail or show modal
+                                    String selectedAnswer = q['answer']!.split('.')[0];
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => QuizQuestionReviewPage(
+                                          questionIndex: index - 1,
+                                          selectedAnswer: selectedAnswer,
+                                        ),
+                                      ),
+                                    );
                                   },
                                   style: OutlinedButton.styleFrom(
                                     side: BorderSide(color: primary),

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'quiz_review_page.dart';
-import 'quiz_review_page.dart';
 
-class QuizTakePage extends StatefulWidget {
-  const QuizTakePage({Key? key}) : super(key: key);
+class QuizQuestionReviewPage extends StatefulWidget {
+  final int questionIndex;
+  final String selectedAnswer;
+
+  const QuizQuestionReviewPage({
+    Key? key,
+    required this.questionIndex,
+    required this.selectedAnswer,
+  }) : super(key: key);
 
   @override
-  State<QuizTakePage> createState() => _QuizTakePageState();
+  State<QuizQuestionReviewPage> createState() => _QuizQuestionReviewPageState();
 }
 
-class _QuizTakePageState extends State<QuizTakePage> {
-  int _currentQuestion = 0; // Start at question 1 (0-indexed as 0)
-  String _selectedAnswer = 'A'; // Default selected for question 1
-  final Set<int> _completedQuestions = {}; // No questions completed
-
+class _QuizQuestionReviewPageState extends State<QuizQuestionReviewPage> {
   final List<String> _questions = [
     'Radio button dapat digunakan untuk menentukan ?',
     'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu ?',
@@ -73,8 +75,8 @@ class _QuizTakePageState extends State<QuizTakePage> {
                     spacing: 8,
                     runSpacing: 8,
                     children: List.generate(15, (index) {
-                      bool isCurrent = index == _currentQuestion;
-                      bool isCompleted = _completedQuestions.contains(index);
+                      bool isCurrent = index == widget.questionIndex;
+                      bool isCompleted = true; // All marked as completed in review
                       Color bgColor = isCurrent ? primary : (isCompleted ? Colors.green : Colors.white);
                       Color textColor = (isCurrent || isCompleted) ? Colors.white : Colors.black;
                       return Container(
@@ -109,7 +111,7 @@ class _QuizTakePageState extends State<QuizTakePage> {
                       boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
                     ),
                     child: Text(
-                      'Soal Nomor ${_currentQuestion + 1} / 15',
+                      'Soal Nomor ${widget.questionIndex + 1} / 15',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
@@ -144,7 +146,7 @@ class _QuizTakePageState extends State<QuizTakePage> {
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
                     ),
-                    child: Text(_questions[_currentQuestion]),
+                    child: Text(_questions[widget.questionIndex % _questions.length]),
                   ),
 
                   const SizedBox(height: 24),
@@ -160,21 +162,18 @@ class _QuizTakePageState extends State<QuizTakePage> {
                       boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
                     ),
                     child: Column(
-                      children: _options[_currentQuestion].asMap().entries.map((entry) {
+                      children: _options[widget.questionIndex % _options.length].asMap().entries.map((entry) {
                         int idx = entry.key;
                         String option = entry.value;
                         String letter = String.fromCharCode(65 + idx); // A, B, C, etc.
+                        bool isSelected = letter == widget.selectedAnswer;
                         return RadioListTile<String>(
                           title: Text('$letter. $option'),
                           value: letter,
-                          groupValue: _selectedAnswer,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedAnswer = value!;
-                            });
-                          },
+                          groupValue: widget.selectedAnswer,
+                          onChanged: null, // Read-only
                           activeColor: primary,
-                          tileColor: _selectedAnswer == letter ? primary : null,
+                          tileColor: isSelected ? primary : null,
                         );
                       }).toList(),
                     ),
@@ -183,59 +182,14 @@ class _QuizTakePageState extends State<QuizTakePage> {
                   const SizedBox(height: 24),
 
                   // Navigation & Aksi
-                  Row(
-                    children: [
-                      if (_currentQuestion > 0)
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () {
-                              setState(() {
-                                _currentQuestion--;
-                                _selectedAnswer = 'A'; // Reset to default
-                              });
-                            },
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              side: BorderSide(color: primary),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            child: Text('Soal Sebelumnya', style: TextStyle(color: primary)),
-                          ),
-                        ),
-                      if (_currentQuestion > 0) const SizedBox(width: 12),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Mark current as completed
-                            setState(() {
-                              _completedQuestions.add(_currentQuestion);
-                            });
-                            // Check if last question
-                            if (_currentQuestion >= _questions.length - 1) {
-                              // Submit quiz and go to review
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (_) => const QuizReviewPage()),
-                              );
-                            } else {
-                              // Go to next question
-                              setState(() {
-                                _currentQuestion++;
-                                _selectedAnswer = 'A'; // Reset selection
-                              });
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _currentQuestion >= _questions.length - 1 ? Colors.green : primary,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          ),
-                          child: Text(
-                            _currentQuestion >= _questions.length - 1 ? 'Selesai' : 'Soal Selanjutnya',
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ],
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primary,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: const Text('Kembali Ke Halam Review', style: TextStyle(color: Colors.white, fontSize: 16)),
                   ),
 
                   const SizedBox(height: 40),
