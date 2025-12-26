@@ -10,7 +10,7 @@ class AnnouncementsPage extends StatelessWidget {
 
     final List<Map<String, String>> announcements = [
       {
-        'title': 'Maintenance Pra UAS Semester Genap 2020/2021',
+        'title': 'Maintenance Pra UAS Semester Genap 2025/2026',
         'by': 'By Admin Celoe – Rabu, 2 Juni 2021, 10:45'
       },
       {
@@ -18,7 +18,7 @@ class AnnouncementsPage extends StatelessWidget {
         'by': 'By Admin Celoe – Senin, 11 Januari 2021, 7:52'
       },
       {
-        'title': 'Maintenance Pra UAS Semester Ganjil 2020/2021',
+        'title': 'Maintenance Pra UAS Semester Ganjil 2025/2026',
         'by': 'By Admin Celoe – Minggu, 10 Januari 2021, 9:30'
       },
     ];

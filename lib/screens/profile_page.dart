@@ -32,17 +32,17 @@ class _ProfileContentState extends State<ProfileContent> {
     {
       'title': 'BAHASA INGGRIS: BUSINESS AND SCIENTIFIC',
       'code': 'D4SM-41-GABI [ARS]',
-      'date': 'Tanggal Mulai Monday, 8 February 2021',
+      'date': 'Tanggal Mulai Monday, 8 Desember 2025',
     },
     {
       'title': 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
       'code': 'D4SM-42-03 [ADV]',
-      'date': 'Tanggal Mulai Monday, 8 February 2021',
+      'date': 'Tanggal Mulai Monday, 8 Desember 2025',
     },
     {
       'title': 'KEWARGANEGARAAN',
       'code': 'D4SM-41-GABI [BBO], JUMAT 2',
-      'date': 'Tanggal Mulai Monday, 8 February 2021',
+      'date': 'Tanggal Mulai Monday, 8 Desember 2025',
     },
   ];
 
@@ -283,8 +283,8 @@ class _ProfileContentState extends State<ProfileContent> {
   }
 
   Widget _buildAboutMe() {
-    final firstAccess = 'Monday, 7 September 2020, 9:27 AM';
-    final lastAccess = 'Tuesday, 22 June 2021, 9:44 PM (now)';
+    final firstAccess = 'Monday, 7 Desember 2025, 9:27 AM';
+    final lastAccess = 'Tuesday, 22 June 2025, 9:44 PM (now)';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

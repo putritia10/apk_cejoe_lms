@@ -9,9 +9,9 @@ class QuizReviewPage extends StatelessWidget {
     final Color primary = const Color(0xFFB52F2F);
 
     // Sample data from the example
-    final String startedAt = 'Kamis 25 Februari 2021 10:25';
+    final String startedAt = 'Kamis 25 Februari 2025 10:25';
     final String status = 'Selesai';
-    final String completedAt = 'Kamis 25 Februari 2021 10:40';
+    final String completedAt = 'Kamis 25 Februari 2025 10:40';
     final String duration = '13 Menit 22 Detik';
     final String score = '0 / 100';
 

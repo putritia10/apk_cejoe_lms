@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'quiz_review_page.dart';
-import 'quiz_review_page.dart';
 
 class QuizTakePage extends StatefulWidget {
   const QuizTakePage({Key? key}) : super(key: key);
@@ -72,7 +71,7 @@ class _QuizTakePageState extends State<QuizTakePage> {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: List.generate(15, (index) {
+                    children: List.generate(_questions.length, (index) {
                       bool isCurrent = index == _currentQuestion;
                       bool isCompleted = _completedQuestions.contains(index);
                       Color bgColor = isCurrent ? primary : (isCompleted ? Colors.green : Colors.white);
@@ -109,7 +108,7 @@ class _QuizTakePageState extends State<QuizTakePage> {
                       boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.03), blurRadius: 8)],
                     ),
                     child: Text(
-                      'Soal Nomor ${_currentQuestion + 1} / 15',
+                      'Soal Nomor ${_currentQuestion + 1} / ${_questions.length}',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
