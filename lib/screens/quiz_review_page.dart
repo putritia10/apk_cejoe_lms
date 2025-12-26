@@ -155,9 +155,14 @@ class QuizReviewPage extends StatelessWidget {
                   // Submit Button
                   ElevatedButton(
                     onPressed: () {
-                      // Navigate back to the course detail page
+                      // Show confirmation message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Jawaban sudah dikirim')),
+                      );
+                      // Navigate back to the class list page
                       Navigator.of(context).pop(); // back to quiz_detail
                       Navigator.of(context).pop(); // back to course_detail
+                      Navigator.of(context).pop(); // back to class_list
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
