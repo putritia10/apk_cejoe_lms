@@ -155,7 +155,9 @@ class QuizReviewPage extends StatelessWidget {
                   // Submit Button
                   ElevatedButton(
                     onPressed: () {
-                      // TODO: Handle submit answers
+                      // Navigate back to the course detail page
+                      Navigator.of(context).pop(); // back to quiz_detail
+                      Navigator.of(context).pop(); // back to course_detail
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
