@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 12),
                       TextField(
                         decoration: InputDecoration(
-                          labelText: 'NPM',
+                          labelText: 'Npm',
                           labelStyle: TextStyle(color: Colors.grey[700], fontSize: 12),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary, width: 1.2),
